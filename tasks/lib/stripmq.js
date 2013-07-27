@@ -7,7 +7,7 @@ var fs = require('fs'),
 
 Stringify.prototype.compile = function(node){
   if(this.viewport.stripBase) {
-  node.stylesheet.rules = _.where(node.stylesheet.rules, {type: "media"});
+    node.stylesheet.rules = _.where(node.stylesheet.rules, {type: "media"});
   }
   return node.stylesheet
   .rules.map(this.visit, this)
