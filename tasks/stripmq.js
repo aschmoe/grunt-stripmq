@@ -1,6 +1,7 @@
 'use strict';
 
 var fs = require("fs"),
+  _ = require('underscore'),
   stripmq = require('./lib/stripmq');
 
 module.exports = function(grunt) {
@@ -37,11 +38,14 @@ module.exports = function(grunt) {
         return result;
       });
 
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
+      // Have something to write
+      if(!_.isEmpty(_.compact(src))) {
+        // Write the destination file.
+        grunt.file.write(f.dest, src.join(''));
 
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
+        // Print a success message.
+        grunt.log.writeln('File "' + f.dest + '" created.');
+      }
     });
   });
 };
