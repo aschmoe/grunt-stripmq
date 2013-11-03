@@ -1,10 +1,14 @@
 body { background: url('mobile-background.png'); }
 
+@media only screen {
+    body { background: url('only-screen.png');}
+}
+
 @media screen and (min-width: 640px) {
     body { background: url('tablet-background.png'); }
 }
 
-@media screen and (max-width: 800px) {
+@media only screen and (max-width: 800px) {
     body { background: url('until-800px-background.png'); }
     .in2 {
       height: 20px;
