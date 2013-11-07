@@ -34,56 +34,57 @@ Stringify.prototype.matchMedia = function(str) {
     queries = str.toLowerCase().match(/\((.+)\)/gi),
     matches = [];
 
-  queries.forEach(function(query) {
-    // min/max is should be the first property, then the name of the property (like width)
-    var keyval = query.replace(/\(|\)/g, "").split(":"),
+  if(queries != null) { 
+    queries.forEach(function(query) {
+      // min/max is should be the first property, then the name of the property (like width)
+      var keyval = query.replace(/\(|\)/g, "").split(":"),
 
-      // property parts
-      property = keyval[0].trim().match(/(min|max)-(.+)$/),
+        // property parts
+        property = keyval[0].trim().match(/(min|max)-(.+)$/),
 
-      prop_value, setting_value_min, setting_value_max;
+        prop_value, setting_value_min, setting_value_max;
 
-    // no min/max property found
-    if(!property) {
-      return;
-    }
-
-    // find setting values by properties
-    if(keyval[0].match(/width/i)) {
-      setting_value_min = self.viewport.minWidth;
-      setting_value_max = self.viewport.maxWidth;
-    }
-
-    else if(keyval[0].match(/height/i)) {
-      setting_value_min = self.viewport.minHeight;
-      setting_value_max = self.viewport.maxHeight;
-    }
-
-    else if(keyval[0].match(/device-pixel-ratio/i)) {
-      setting_value_min = self.viewport["min-device-pixel-ratio"];
-      setting_value_max = self.viewport["max-device-pixel-ratio"];
-
-      // opera device pixel ratio is different, uses 3/2 for 1.5, kind of weird
-      if(keyval[1].match(/[0-9]+\s*\/\s*[0-9]+/)) {
-        var values = keyval[1].split("/");
-        prop_value = parseInt(values[0],10) / parseInt(values[1],10);
+      // no min/max property found
+      if(!property) {
+        return;
       }
-    }
 
-    // parse the value of the property
-    prop_value = parseFloat(prop_value || keyval[1]);
+      // find setting values by properties
+      if(keyval[0].match(/width/i)) {
+        setting_value_min = self.viewport.minWidth;
+        setting_value_max = self.viewport.maxWidth;
+      }
 
-    switch(property[1]) {
-      case 'min':
-        matches.push((setting_value_min <= prop_value) && (setting_value_max >= prop_value));
-        break;
+      else if(keyval[0].match(/height/i)) {
+        setting_value_min = self.viewport.minHeight;
+        setting_value_max = self.viewport.maxHeight;
+      }
 
-      case 'max':
-        matches.push((setting_value_max >= prop_value) && (setting_value_min <= prop_value));
-        break;
-    }
-  });
+      else if(keyval[0].match(/device-pixel-ratio/i)) {
+        setting_value_min = self.viewport["min-device-pixel-ratio"];
+        setting_value_max = self.viewport["max-device-pixel-ratio"];
 
+        // opera device pixel ratio is different, uses 3/2 for 1.5, kind of weird
+        if(keyval[1].match(/[0-9]+\s*\/\s*[0-9]+/)) {
+          var values = keyval[1].split("/");
+          prop_value = parseInt(values[0],10) / parseInt(values[1],10);
+        }
+      }
+
+      // parse the value of the property
+      prop_value = parseFloat(prop_value || keyval[1]);
+
+      switch(property[1]) {
+        case 'min':
+          matches.push((setting_value_min <= prop_value) && (setting_value_max >= prop_value));
+          break;
+
+        case 'max':
+          matches.push((setting_value_max >= prop_value) && (setting_value_min <= prop_value));
+          break;
+      }
+    });
+  }
   return matches.indexOf(false) === -1;
 };
 
