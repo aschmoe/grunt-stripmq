@@ -31,8 +31,11 @@ Stringify.prototype.media = function(node) {
  */
 Stringify.prototype.matchMedia = function(str) {
   var self = this,
-    queries = str.toLowerCase().match(/\((.+)\)/gi),
+    media = str.toLowerCase(),
+    queries = media.match(/\(([^)]*?)\)/gi),
     matches = [];
+    if(!queries)
+      return (/^only screen$/).test(media);
 
   if(queries != null) { 
     queries.forEach(function(query) {
