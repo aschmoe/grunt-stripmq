@@ -7,7 +7,14 @@ var fs = require('fs'),
 
 Stringify.prototype.compile = function(node){
   if(this.viewport.stripBase) {
-    node.stylesheet.rules = _.where(node.stylesheet.rules, {type: "media"});
+    node.stylesheet.rules = _.reject(
+      _.where(
+        node.stylesheet.rules, {type: "media"}
+      ), 
+      function(rule) { 
+        return rule.media && rule.media === "print"; 
+      }
+    );
   }
   return node.stylesheet
   .rules.map(this.visit, this)
