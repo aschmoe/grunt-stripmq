@@ -12,7 +12,7 @@ Stringify.prototype.compile = function(node){
         node.stylesheet.rules, {type: "media"}
       ), 
       function(rule) { 
-        return rule.media && rule.media === "print"; 
+        return rule.media && (rule.media === "print" ||  rule.media === "only screen"); 
       }
     );
   }
