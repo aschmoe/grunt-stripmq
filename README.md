@@ -6,8 +6,6 @@ This plugin requires Grunt `~0.4.0`, and Node `~0.10.0`
 
 Port of [jtangelder's](https://github.com/jtangelder/grunt-stripmq) that takes into account min and max values, allows for file globbing, and has a variable switch to remove all css not contained in media-queries.
 
-## Notes
-
 ## Extra Variables
 
 ### stripBase
@@ -27,6 +25,9 @@ If true, max widths/heights on processed media queries must be *greater than* th
 Two media queries are encountered
 
 > screen and (min-width: 769)
+
+and 
+
 > screen and (min-width: 600 and max-width: 768)
 
 The first is accepted, printing the containing styles. The second is excluded.
