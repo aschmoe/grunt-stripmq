@@ -18,7 +18,9 @@ module.exports = function (grunt) {
       options: {
         stripBase: true,
         minWidth: 600,
-        maxWidth: 800
+        maxWidth: 800,
+        abortMaxWidth: true,
+        abortMaxHeight: true
       },
       all: {
         /*files: [
@@ -30,7 +32,7 @@ module.exports = function (grunt) {
             cwd: 'test/input',
             src: ['*.css'],
             dest: 'test/output/',
-            ext: '-ie.css',
+            ext: '-ie.css'
           },
         ]
       }
